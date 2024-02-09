@@ -5,7 +5,9 @@ import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
-        // todo: add options
+        plugin = {"pretty"},
+        glue = {"stepdefinitions", "hooks"},
+        features = {"src/test/java/features"}
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
 
