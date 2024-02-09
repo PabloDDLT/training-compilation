@@ -7,16 +7,18 @@ import org.openqa.selenium.By;
 
 import java.util.List;
 
-
 public class MainPage extends Form {
-    private IElementFactory elementFactory = AqualityServices.getElementFactory();
-    private IButton acceptanceBtn = elementFactory.getButton(By.xpath("//*[contains(@class, 'policy-accept')]"), "Acceptance Button");
-    private ITextBox searchBar = elementFactory.getTextBox(By.xpath("//*[contains(@class, 'search-input')]"), "Search Bar");
-    private IElement resultsContainer = elementFactory.getLabel(By.xpath("//div[contains(@class, 'search-results')]"), "Results Container");
-    public List<ILabel> results = elementFactory.findElements(By.xpath("//div[contains(@class, 'source-accuweather')]"), ILabel.class);
-    private ILabel currentLoc = elementFactory.getLabel(By.xpath("//div[contains(@class, 'current-location-result')]"), "Current Location");
-    private ILabel recentLoc = elementFactory.getLabel(By.xpath("//a[contains(@class, 'recent-location-item')][1]"), "Recent Location");
+    private final IElementFactory elementFactory = AqualityServices.getElementFactory();
+    private final IButton acceptanceBtn = elementFactory.getButton(By.xpath("//div[contains(@class, 'policy-accept')]"), "Acceptance Button");
+    private final ITextBox searchBar = elementFactory.getTextBox(By.xpath("//input[contains(@class, 'search-input')]"), "Search Bar");
+    //private final IElement resultsContainer = elementFactory.getLabel(By.xpath("//div[contains(@class, 'search-results')]"), "Results Container");
+    private final ILabel currentLoc = elementFactory.getLabel(By.xpath("//div[contains(@class, 'current-location-result')]"), "Current Location");
 
+    //TODO: remove index from locator
+    private final ILabel recentLoc = elementFactory.getLabel(By.xpath("//a[contains(@class, 'recent-location-item')][1]"), "Recent Location");
+    private final By RESULTS_BOX = By.xpath("//div[contains(@class, 'search-bar-result')]");
+
+    // TODO: REMOVE CITYNAME AND RECENTCITY VARIABLES.
     public String cityName;
     public String recentCity;
 
@@ -29,36 +31,35 @@ public class MainPage extends Form {
     }
 
     public void searchCity(String name) {
-        this.cityName = name;
+        cityName = name;
         searchBar.clearAndType(name);
     }
 
-    public boolean isCityDisplayed() {
-        return resultsContainer.state().waitForDisplayed();
-
+    public List<ILabel> getSearchResults() {
+        return elementFactory.findElements(RESULTS_BOX, ILabel.class);
     }
 
+    public boolean isCityDisplayed() {
+        List<ILabel> results = getSearchResults();
+        return results.get(0).state().isDisplayed();
+    }
 
+    //TODO: check why the result variable does not show the results generated with the search
     public void clickFirstResult() {
-
-        results.get(0).state().waitForDisplayed();
-        results.get(0).click();
+        List<ILabel> results = getSearchResults();
+        results.get(1).state().waitForDisplayed();
+        results.get(1).click();
     }
 
     public void clickSearchField() {
         searchBar.click();
     }
 
-    public boolean currentLocDisplayed() {
-        return currentLoc.state().isDisplayed();
-    }
-
-    public boolean mainPageIsOpened() {
+    public boolean isCurrentLocDisplayed() {
         return currentLoc.state().isDisplayed();
     }
 
     public void clickRecentLoc() {
-        recentCity = recentLoc.getText();
         recentLoc.click();
     }
 }

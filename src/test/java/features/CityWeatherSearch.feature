@@ -4,18 +4,17 @@ Feature: City Weather Search
   in order to see it's weather
 
   Background: Initial page and data usage
-    Given the Main page is open
-    And I consent to data usage in the banner
+    Given I consent to data usage in the banner
 
   Scenario: Search for City Weather
     When I input 'New York' in the search field
     Then the search results list is displayed
-    And I click on the first search result
+    When I click on the first search result
     Then the City Weather page header contains name from the search
 
   Scenario: View Weather for a Recently Searched City
     When I input 'London' in the search field
-    And I click on the first search result
+    When I click on the first search result
     And I go back to the main page
     Then the Main page is opened
     And I choose the first city in Recent locations
@@ -24,4 +23,4 @@ Feature: City Weather Search
   Scenario: Search for City and Use Current Location
     When I click the search field on the main page
     Then the search results list is displayed
-    And the "Use your current location" label is displayed
+    And the 'Use your current location' label is displayed

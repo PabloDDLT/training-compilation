@@ -13,20 +13,18 @@ public class ResultsPageSteps {
     private ResultsPage resultsPage = new ResultsPage();
 
     @Then("the City Weather page header contains name from the search")
-    public void isNameDisplayed(){
-        step("the City Weather page header contains name from the search");
+    public void isNameDisplayed() {
         Assert.assertTrue(resultsPage.getHeaderName().matches("\\b" + mainPage.cityName + "\\b"));
     }
+
     @When("I go back to the main page")
-    public void backToMainPage(){
-        step("I go back to the main page");
+    public void backToMainPage() {
         resultsPage.backToMainPage();
     }
 
+    //TODO: change matches() with contains() and reuse method for similar ones
     @Then("the City Weather page header contains the city name from the recent locations")
     public void thePageHeaderContainsTheCityNameFromTheRecentLocations() {
-        step("the City Weather page header contains the city name from the recent locations");
-
         Assert.assertTrue(resultsPage.getHeaderName().matches("\\b" + mainPage.recentCity + "\\b"));
     }
 }
