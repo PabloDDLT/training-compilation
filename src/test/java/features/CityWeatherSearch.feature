@@ -14,10 +14,10 @@ Feature: City Weather Search
 
   Scenario: View Weather for a Recently Searched City
     When I input 'London' in the search field
-    When I click on the first search result
-    And I go back to the main page
+    And I click on the first search result
+    When I go back to the main page
     Then the Main page is opened
-    And I choose the first city in Recent locations
+    When I choose the first city in Recent locations
     Then the City Weather page header contains the city name from the recent locations
 
   Scenario: Search for City and Use Current Location

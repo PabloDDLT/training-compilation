@@ -7,7 +7,7 @@ import io.cucumber.java.Before;
 import utils.SettingsTestData;
 
 public class Hooks {
-    private Browser browser = AqualityServices.getBrowser();
+    private Browser browser;
 
     @Before
     public void setUp() {

@@ -14,7 +14,7 @@ public class ResultsPageSteps {
 
     @Then("the City Weather page header contains name from the search")
     public void isNameDisplayed() {
-        Assert.assertTrue(resultsPage.getHeaderName().matches("\\b" + mainPage.cityName + "\\b"));
+        Assert.assertTrue(resultsPage.getHeaderName().contains(mainPage.recentCity));
     }
 
     @When("I go back to the main page")

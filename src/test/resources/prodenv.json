@@ -1,4 +1,4 @@
 {
-  "domain": "www.accuweather.com",
+  "host": "https://www.accuweather.com",
   "wait": 15
 }

@@ -4,10 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class EnvData {
-    private String domain;
+    private String host;
     private int wait;
 
-    public String getHost() {
-        return   "https://" + domain;
-    }
 }

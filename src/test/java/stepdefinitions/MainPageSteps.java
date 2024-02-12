@@ -24,7 +24,7 @@ public class MainPageSteps {
 
     @Then("the search results list is displayed")
     public void isResultsDisplayed() {
-        Assert.assertTrue(mainPage.isCityDisplayed(),"No results were displayed");
+        Assert.assertTrue(mainPage.isResultsDisplayed(),"No results were displayed");
     }
 
     @When("I click on the first search result")

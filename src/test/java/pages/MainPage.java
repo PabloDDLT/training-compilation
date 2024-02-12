@@ -4,7 +4,12 @@ import aquality.selenium.browser.AqualityServices;
 import aquality.selenium.elements.interfaces.*;
 import aquality.selenium.forms.Form;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.SettingsTestData;
 
+import java.time.Duration;
 import java.util.List;
 
 public class MainPage extends Form {
@@ -16,7 +21,8 @@ public class MainPage extends Form {
 
     //TODO: remove index from locator
     private final ILabel recentLoc = elementFactory.getLabel(By.xpath("//a[contains(@class, 'recent-location-item')][1]"), "Recent Location");
-    private final By RESULTS_BOX = By.xpath("//div[contains(@class, 'search-bar-result')]");
+    private final By SEARCHED_RESULTS = By.xpath("//div[contains(@class, 'source-radar')]");
+
 
     // TODO: REMOVE CITYNAME AND RECENTCITY VARIABLES.
     public String cityName;
@@ -31,24 +37,27 @@ public class MainPage extends Form {
     }
 
     public void searchCity(String name) {
-        cityName = name;
+        this.cityName = name;
         searchBar.clearAndType(name);
+        WebDriver driver = AqualityServices.getBrowser().getDriver();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(SettingsTestData.getEnvData().getWait()));
+        wait.until(ExpectedConditions.presenceOfElementLocated(SEARCHED_RESULTS));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(SEARCHED_RESULTS));
     }
 
     public List<ILabel> getSearchResults() {
-        return elementFactory.findElements(RESULTS_BOX, ILabel.class);
+        return elementFactory.findElements(SEARCHED_RESULTS, ILabel.class);
     }
 
-    public boolean isCityDisplayed() {
-        List<ILabel> results = getSearchResults();
-        return results.get(0).state().isDisplayed();
+    public boolean isResultsDisplayed() {
+        ILabel resultList = elementFactory.getLabel(By.xpath("//div[contains(@class, 'search-results')]"), "Results List");
+        return resultList.state().waitForDisplayed();
     }
 
-    //TODO: check why the result variable does not show the results generated with the search
     public void clickFirstResult() {
         List<ILabel> results = getSearchResults();
-        results.get(1).state().waitForDisplayed();
-        results.get(1).click();
+        results.get(0).state().waitForDisplayed();
+        results.get(0).click();
     }
 
     public void clickSearchField() {

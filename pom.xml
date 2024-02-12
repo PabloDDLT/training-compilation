@@ -37,8 +37,8 @@
         </dependency>
         <dependency>
             <groupId>com.github.aquality-automation</groupId>
-            <artifactId>aquality-selenium-java</artifactId>
-            <version>4.0.1-SNAPSHOT</version>
+            <artifactId>aquality-selenium</artifactId>
+            <version>4.2.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -69,6 +69,12 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-cucumber5-jvm</artifactId>
             <version>2.19.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-api</artifactId>
+            <version>4.17.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
