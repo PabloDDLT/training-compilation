@@ -6,7 +6,8 @@ import aquality.selenium.forms.Form;
 import org.openqa.selenium.By;
 
 public class ResultsPage extends Form {
-    private final ILabel headerName = AqualityServices.getElementFactory().getLabel(By.xpath("//div[contains(@class, 'header-loc')]"), "Header");
+    private final By HEADER= By.xpath("//h1[contains(@class, 'header-loc')]");
+    private final ILabel headerName = AqualityServices.getElementFactory().getLabel(HEADER, "Header");
 
     public ResultsPage() {
         super(By.xpath(String.format(LocatorConstants.PRECISE_TEXT_XPATH, "Results")), "Results");
@@ -14,9 +15,5 @@ public class ResultsPage extends Form {
 
     public String getHeaderName() {
         return headerName.getText();
-    }
-
-    public void backToMainPage() {
-        AqualityServices.getBrowser().getDriver().navigate().back();
     }
 }

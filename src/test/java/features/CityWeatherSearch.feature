@@ -10,7 +10,7 @@ Feature: City Weather Search
     When I input 'New York' in the search field
     Then the search results list is displayed
     When I click on the first search result
-    Then the City Weather page header contains name from the search
+    Then the City Weather page header contains 'New York'
 
   Scenario: View Weather for a Recently Searched City
     When I input 'London' in the search field
@@ -18,7 +18,7 @@ Feature: City Weather Search
     When I go back to the main page
     Then the Main page is opened
     When I choose the first city in Recent locations
-    Then the City Weather page header contains the city name from the recent locations
+    Then the City Weather page header contains 'London'
 
   Scenario: Search for City and Use Current Location
     When I click the search field on the main page

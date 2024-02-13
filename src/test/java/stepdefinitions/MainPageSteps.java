@@ -1,13 +1,13 @@
 package stepdefinitions;
 
+import aquality.selenium.browser.AqualityServices;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
-
-import static io.qameta.allure.Allure.step;
 
 public class MainPageSteps {
     private final MainPage mainPage = new MainPage();
@@ -24,7 +24,7 @@ public class MainPageSteps {
 
     @Then("the search results list is displayed")
     public void isResultsDisplayed() {
-        Assert.assertTrue(mainPage.isResultsDisplayed(),"No results were displayed");
+        Assert.assertTrue(mainPage.isResultsDisplayed(), "No results were displayed");
     }
 
     @When("I click on the first search result")
@@ -39,12 +39,12 @@ public class MainPageSteps {
 
     @And("the 'Use your current location' label is displayed")
     public void currentLocDisplayed() {
-        Assert.assertTrue(mainPage.isCurrentLocDisplayed(),"'Use your current location' Label not Displayed");
+        Assert.assertTrue(mainPage.isCurrentLocDisplayed(), "'Use your current location' Label not Displayed");
     }
 
     @Then("the Main page is opened")
     public void isMainPageOpen() {
-        Assert.assertTrue(mainPage.state().waitForDisplayed(),"Main Page was not Opened");
+        Assert.assertTrue(AqualityServices.getBrowser().getDriver().findElement(By.tagName("body")).isDisplayed(), "Main Page was not Opened");
     }
 
     @When("I choose the first city in Recent locations")

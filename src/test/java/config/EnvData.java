@@ -6,5 +6,4 @@ import lombok.Getter;
 public class EnvData {
     private String host;
     private int wait;
-
 }
