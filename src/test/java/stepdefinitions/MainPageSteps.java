@@ -1,16 +1,14 @@
 package stepdefinitions;
 
-import aquality.selenium.browser.AqualityServices;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.MainPage;
 
 public class MainPageSteps {
-    private final MainPage mainPage = new MainPage();
+    private final MainPage mainPage = new MainPage("//body[contains(@class,'home')]");
 
     @Given("I consent to data usage in the banner")
     public void consentDataUsage() {
@@ -44,7 +42,7 @@ public class MainPageSteps {
 
     @Then("the Main page is opened")
     public void isMainPageOpen() {
-        Assert.assertTrue(AqualityServices.getBrowser().getDriver().findElement(By.tagName("body")).isDisplayed(), "Main Page was not Opened");
+        Assert.assertTrue(mainPage.state().waitForDisplayed(), "Main Page was not Opened");
     }
 
     @When("I choose the first city in Recent locations")

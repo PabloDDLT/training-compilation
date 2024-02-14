@@ -4,12 +4,7 @@ import aquality.selenium.browser.AqualityServices;
 import aquality.selenium.elements.interfaces.*;
 import aquality.selenium.forms.Form;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.SettingsTestData;
 
-import java.time.Duration;
 import java.util.List;
 
 public class MainPage extends Form {
@@ -19,8 +14,8 @@ public class MainPage extends Form {
     private final ILabel currentLoc = elementFactory.getLabel(By.xpath("//div[contains(@class, 'current-location-result')]"), "Current Location");
     private final By SEARCHED_RESULTS = By.xpath("//div[contains(@class, 'source-radar')]");
 
-    public MainPage() {
-        super(By.xpath(String.format(LocatorConstants.PRECISE_TEXT_XPATH, "AccuWeather")), "Main Page");
+    public MainPage(String dynamicXPath) {
+        super(By.xpath(dynamicXPath), "Main Page");
     }
 
     public void clickAcceptPrivacy() {
@@ -29,18 +24,7 @@ public class MainPage extends Form {
 
     public void searchCity(String name) {
         searchBar.clearAndType(name);
-        WebDriver driver = AqualityServices.getBrowser().getDriver();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(SettingsTestData.getEnvData().getWait()));
-        wait.until(ExpectedConditions.presenceOfElementLocated(SEARCHED_RESULTS));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(SEARCHED_RESULTS));
-    }
-
-    public List<ILabel> getSearchResults() {
-        return elementFactory.findElements(SEARCHED_RESULTS, ILabel.class);
-    }
-
-    public List<ILabel> getResentLocs() {
-        return elementFactory.findElements(By.xpath("//a[contains(@class, 'recent-location-item')]"), ILabel.class);
+        AqualityServices.getConditionalWait().waitFor(() -> !elementFactory.findElements(SEARCHED_RESULTS, ILabel.class).isEmpty());
     }
 
     public boolean isResultsDisplayed() {
@@ -49,7 +33,7 @@ public class MainPage extends Form {
     }
 
     public void clickFirstResult() {
-        List<ILabel> results = getSearchResults();
+        List<ILabel> results = elementFactory.findElements(SEARCHED_RESULTS, ILabel.class);
         results.get(0).state().waitForDisplayed();
         results.get(0).click();
     }
@@ -63,7 +47,18 @@ public class MainPage extends Form {
     }
 
     public void clickRecentLoc() {
-        List<ILabel> recentLocs = getResentLocs();
+        List<ILabel> recentLocs = elementFactory.findElements(By.xpath("//a[contains(@class, 'recent-location-item')]"), ILabel.class);
         recentLocs.get(0).click();
+        addHandler();
+    }
+
+    public void addHandler() {
+        ILabel adFrame = elementFactory.getLabel(By.xpath("//iframe[contains(@id, 'interstitial')]"), "Ad frame");
+        AqualityServices.getConditionalWait().waitFor(() -> adFrame.state().isExist(), "Iframe is not present");
+        if (adFrame.state().isExist()) {
+            AqualityServices.getBrowser().getDriver().switchTo().frame(adFrame.getElement());
+            elementFactory.getLabel(By.xpath("//div[contains(@id,'dismiss')]"), "Dismiss btn").click();
+            AqualityServices.getBrowser().getDriver().switchTo().defaultContent();
+        }
     }
 }
