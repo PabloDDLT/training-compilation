@@ -1,24 +1,29 @@
 package pages;
 
 import aquality.selenium.browser.AqualityServices;
+import aquality.selenium.elements.interfaces.IElementFactory;
 import aquality.selenium.elements.interfaces.ILabel;
+import aquality.selenium.elements.interfaces.ILink;
 import aquality.selenium.forms.Form;
 import org.openqa.selenium.By;
-import utils.BrowserUtils;
 
 public class ResultsPage extends Form {
-    private final ILabel headerName = AqualityServices.getElementFactory().getLabel(By.xpath("//h1[contains(@class, 'header-loc')]"), "Header");
+    private final IElementFactory elementFactory = AqualityServices.getElementFactory();
+    private final ILabel toolsNav = elementFactory.getLabel(By.xpath("//nav[contains(@class, 'tools-landmark')]"), "Tools Nav");
+    private final ILink downloadToPDF = elementFactory.getLink(By.xpath("//a[contains(@href, 'Download')]"), "Download Page");
+    private final ILink informationPage = elementFactory.getLink(By.xpath("//a[contains(@href, 'action=info')]"), "Information Page");
 
-    public ResultsPage(String dynamicXPath) {
-        super(By.xpath(dynamicXPath), "Results");
+    public ResultsPage() {
+        super(By.xpath("//body[contains(@class,'subject')]"), "Results");
     }
 
-    public void waitForDisplayedAndGoBack() {
-        AqualityServices.getConditionalWait().waitFor(() -> headerName.state().waitForDisplayed());
-        BrowserUtils.backToMainPage();
+    public void goToDownloadPage() {
+        toolsNav.click();
+        downloadToPDF.click();
     }
 
-    public String getHeaderName() {
-        return headerName.getText();
+    public void goToInfoPage() {
+        toolsNav.click();
+        informationPage.click();
     }
 }

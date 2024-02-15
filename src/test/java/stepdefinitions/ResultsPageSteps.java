@@ -6,15 +6,20 @@ import org.testng.Assert;
 import pages.ResultsPage;
 
 public class ResultsPageSteps {
-    private final ResultsPage resultsPage = new ResultsPage("//body[contains(@class,'search-locations')]");
+    private final ResultsPage resultsPage = new ResultsPage();
 
-    @Then("the City Weather page header contains {string}")
-    public void isNameDisplayed(String name) {
-        Assert.assertTrue(resultsPage.getHeaderName().contains(name),"Name of search doesn't match header");
+    @When("I click Tool menu button and Download as PDF button on the Article page")
+    public void clickToolMenuToDownloadPDF() {
+        resultsPage.goToDownloadPage();
     }
 
-    @When("I go back to the main page")
-    public void goBack(){
-        resultsPage.waitForDisplayedAndGoBack();
+    @When("I click Tool menu button and Page information button on the Article page")
+    public void clickToolMenuAndArticlePage() {
+        resultsPage.goToInfoPage();
+    }
+
+    @Then("The article page for {string} is open.")
+    public void isArticlePageOpen(String name) {
+        Assert.assertTrue(resultsPage.state().waitForDisplayed(), "Page for" + name + " was not displayed");
     }
 }

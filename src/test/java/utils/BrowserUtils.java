@@ -6,7 +6,5 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class BrowserUtils {
 
-    public void backToMainPage() {
-        AqualityServices.getBrowser().getDriver().navigate().back();
-    }
+
 }
