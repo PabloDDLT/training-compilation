@@ -1,5 +1,6 @@
 package stepdefinitions;
 
+import config.EnvData;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.testng.Assert;
@@ -22,4 +23,5 @@ public class ResultsPageSteps {
     public void isArticlePageOpen(String name) {
         Assert.assertTrue(resultsPage.state().waitForDisplayed(), "Page for" + name + " was not displayed");
     }
+
 }
