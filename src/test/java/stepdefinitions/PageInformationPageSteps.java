@@ -17,6 +17,6 @@ public class PageInformationPageSteps {
     @Then("the name {string} is displayed")
     public void isNameDisplayed(String name) {
         step("the name" + name + " is displayed");
-        Assert.assertEquals(name, "Albert Einstein", "names are not equal");
+        Assert.assertEquals(name, "Albert Einstin", "names are not equal");
     }
 }
