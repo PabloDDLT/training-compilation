@@ -16,6 +16,7 @@ Feature: Wikipedia Search
     When I input 'Albert Einstein' text in the search field and click submit button
     And I click Tool menu button and Page information button on the Article page
     Then the Information page for Albert Einstein article is displayed
+    Then the name 'Albert Einstein' is displayed
 
   Scenario: Change search language
     When I input 'Albert Einstein' text in the search field, change search language to 'Español' and click submit button
